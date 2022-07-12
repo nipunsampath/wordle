@@ -3,7 +3,7 @@ import Box from "../Box";
 import words from "../../words";
 
 const correct = words[Math.floor((Math.random() * words.length) - 1)].toUpperCase();
-let defaulBoard = [];
+let defaultBoard = [];
 let defaultLetters = [];
 
 "abcdefghijklmnopqrstuvwxyz".split("").forEach((i) => {
@@ -11,15 +11,15 @@ let defaultLetters = [];
 });
 
 for (let i = 0; i < 6; i++) {
-  defaulBoard.push([]);
+  defaultBoard.push([]);
   for (let j = 0; j < 5; j++) {
-    defaulBoard[i].push(["", ""]);
+    defaultBoard[i].push(["", ""]);
   }
 }
 
 function Board(props) {
   const [letters, setLetters] = useState(defaultLetters);
-  const [board, setBoard] = useState(defaulBoard);
+  const [board, setBoard] = useState(defaultBoard);
   const [changed, setChanged] = useState(false);
   const [row, setRow] = useState(0);
   const [col, setCol] = useState(0);
