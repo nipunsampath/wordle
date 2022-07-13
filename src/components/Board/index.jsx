@@ -2,37 +2,16 @@ import { useEffect, useState } from "react";
 import Box from "../Box";
 import words from "../../words";
 
-const correct = words[Math.floor((Math.random() * words.length) - 1)].toUpperCase();
-let defaultBoard = [];
-let defaultLetters = [];
 
-"abcdefghijklmnopqrstuvwxyz".split("").forEach((i) => {
-  defaultLetters[i] = "";
-});
-
-for (let i = 0; i < 6; i++) {
-  defaultBoard.push([]);
-  for (let j = 0; j < 5; j++) {
-    defaultBoard[i].push(["", ""]);
-  }
-}
-
-function Board(props) {
-  const [letters, setLetters] = useState(defaultLetters);
-  const [board, setBoard] = useState(defaultBoard);
-  const [changed, setChanged] = useState(false);
-  const [row, setRow] = useState(0);
-  const [col, setCol] = useState(0);
-  const [win, setWin] = useState(false);
-  const [lost, setLost] = useState(false);
-  const [message, setMessage] = useState("");
+const Board = props => {
+  const {row, col, setRow, setCol, clicks, letter, board, setBoard, error, correct, setLetters, win, setWin, lost, setLost, message, setMessage} = props;
 
   useEffect(() => {
     if (win || lost) {
       console.log("Game ended!");
     } else {
-      if (props.clicks !== 0) {
-        if (props.letter === "DEL") {
+      if (clicks !== 0) {
+        if (letter === "DEL") {
           setCol(col === 0 ? 0 : col - 1);
           setBoard((prevBoard) => {
             prevBoard[row][col === 0 ? 0 : col - 1][0] = "";
@@ -41,17 +20,17 @@ function Board(props) {
         } else {
           setBoard((prevBoard) => {
             if (col < 5) {
-              if (props.letter !== "ENTER") {
-                prevBoard[row][col][0] = props.letter;
+              if (letter !== "ENTER") {
+                prevBoard[row][col][0] = letter;
                 setCol(col + 1);
               } else {
-                props.error("Words are 5 letters long!");
+                error("Words are 5 letters long!");
                 setTimeout(() => {
-                  props.error("");
+                  error("");
                 }, 1000);
               }
             } else {
-              if (props.letter === "ENTER") {
+              if (letter === "ENTER") {
                 let correctLetters = 0;
                 let word = "";
                 for (let i = 0; i < 5; i++) {
@@ -75,11 +54,10 @@ function Board(props) {
 
                     setCol(0);
                     setLetters((prev) => {
-                      prev[board[row][i][0]] = board[row][i][1];
+                      prev[board[row][i][0].toLowerCase()] = board[row][i][1];
                       return prev;
                     });
                   }
-                  setChanged(!changed);
 
                   if (correctLetters === 5) {
                     setWin(true);
@@ -89,9 +67,9 @@ function Board(props) {
                   }
                   return prevBoard;
                 } else {
-                  props.error("Word not in dictionary");
+                  error("Word not in dictionary");
                   setTimeout(() => {
-                    props.error("");
+                    error("");
                   }, 1000);
                 }
               }
@@ -101,28 +79,24 @@ function Board(props) {
         }
       }
     }
-  }, [props.clicks]);
-
-  useEffect(() => {
-    props.letters(letters);
-  }, [changed]);
+  }, [clicks]);
 
   return (
     <div className="px-10 py-5 grid gap-y-1 items-center w-100 justify-center">
       {board.map((row, key) => {
         return (
-          <div key={key} className="flex gap-1 w-fit">
-            {row.map((value, key) => (
-              <Box key={key} value={value[0]} state={value[1]} pos={key} />
-            ))}
-          </div>
+            <div key={key} className="flex gap-1 w-fit">
+              {row.map((value, key) => (
+                  <Box key={key} value={value[0]} state={value[1]} pos={key}/>
+              ))}
+            </div>
         );
       })}
       <div className=" grid place-items-center h-8 font-bold dark:text-white">
-        {lost||win ? message : ""}
+        {lost || win ? message : ""}
       </div>
     </div>
   );
-}
+};
 
 export default Board;

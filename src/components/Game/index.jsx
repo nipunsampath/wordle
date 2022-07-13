@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import Board from "../Board";
 import Error from "../Error";
 import Help from "../Help";
@@ -6,24 +6,80 @@ import KeyBoard from "../KeyBoard";
 import Modal from "../Modal";
 import NavBar from "../NavBar";
 import styles from "./style.module.css";
+import words from "../../words";
+import {Button} from "@mui/material";
+
+const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
+function regenerateCorrectWord() {
+  let index = Math.floor((Math.random() * words.length) - 1);
+  const correctWord = words[index].toUpperCase();
+  // words.splice(index, 1)
+  console.log("initializing correctWord word", correctWord)
+  return correctWord;
+}
+
+const initializeGame = () => {
+  const initialCorrectWord = regenerateCorrectWord();
+  let initialBoard = [];
+  let initialLetters = [];
+
+  ALPHABET.split("").forEach((i) => {
+    initialLetters[i] = "";
+  });
+
+  for (let i = 0; i < 6; i++) {
+    initialBoard.push([]);
+    for (let j = 0; j < 5; j++) {
+      initialBoard[i].push(["", ""]);
+    }
+  }
+  return {initialCorrectWord, initialLetters, initialBoard}
+}
+
+let {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
 
 function Game(props) {
+
+  // Game states
   const [letter, setLetter] = useState();
   const [changed, setChanged] = useState(false);
-  const [letters, setLetters] = useState({});
+  const [correctWord, setCorrectWord] = useState(initialCorrectWord)
+  const [board, setBoard] = useState(initialBoard);
+  const [letters, setLetters] = useState(initialLetters);
+  const [row, setRow] = useState(0);
+  const [col, setCol] = useState(0);
+  const [win, setWin] = useState(false);
+  const [lost, setLost] = useState(false);
+  const [message, setMessage] = useState("");
+
   const [help, setHelp] = useState(false);
   const [clicked, setClicked] = useState(0);
   const [error, setError] = useState("");
   const [dark, setDark] = useState(false);
 
+  const reInitializeGame = () => {
+    words.splice(words.indexOf(correctWord.toLowerCase()),1);
+
+    const {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
+    setCorrectWord(initialCorrectWord);
+    setBoard(initialBoard);
+    setLetters(initialLetters);
+    setRow(0);
+    setCol(0);
+    setWin(false);
+    setLost(false);
+    setMessage("");
+  }
+
   const onClickDown = (event) => {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       setLetter("ENTER");
       setClicked(clicked + 1);
-    } else if (event.key == "Backspace") {
+    } else if (event.key === "Backspace") {
       setLetter("DEL");
       setClicked(clicked + 1);
-    } else if ("abcdefghijklmnopqrstuvwxyz".includes(event.key.toLowerCase())) {
+    } else if (ALPHABET.includes(event.key.toLowerCase())) {
       setLetter(event.key.toUpperCase());
       setClicked(clicked + 1);
     }
@@ -43,31 +99,47 @@ function Game(props) {
     setLetter(letterValue);
     setClicked(clicked + 1);
   };
-  const LettersHandler = (lettersValue) => {
-    setLetters(lettersValue);
+
+  useEffect(() => {
     setChanged(!changed);
-  };
+  }, [letters])
+
   return (
-    <>
-      {help && (
-        <Modal title="How to play!" help={setHelp}>
-          {" "}
-          <Help />{" "}
-        </Modal>
-      )}
-      {error && <Error>{error}</Error>}
-      <div className={styles.game}>
-        <NavBar help={setHelp} darkness={setDark} dark={dark} />
-        <hr />
-        <Board
-          letter={letter}
-          clicks={clicked}
-          letters={LettersHandler}
-          error={setError}
-        />
-        <KeyBoard keyHandler={keyHandler} letters={letters} changed={changed} />
-      </div>
-    </>
+      <>
+        {help && (
+            <Modal title="How to play!" help={setHelp}>
+              {" "}
+              <Help/>{" "}
+            </Modal>
+        )}
+        {error && <Error>{error}</Error>}
+        <div className={styles.game}>
+          <NavBar help={setHelp} darkness={setDark} dark={dark}/>
+          <hr/>
+          <Board
+              row={row}
+              setRow={setRow}
+              col={col}
+              setCol={setCol}
+              correct={correctWord}
+              board={board}
+              setBoard={setBoard}
+              letter={letter}
+              clicks={clicked}
+              letters={letters}
+              setLetters={setLetters}
+              error={setError}
+              win={win}
+              setWin={setWin}
+              lost={lost}
+              setLost={setLost}
+              message={message}
+              setMessage={setMessage}
+          />
+          <KeyBoard keyHandler={keyHandler} letters={letters}/>
+          <Button onClick={reInitializeGame}>Next</Button>
+        </div>
+      </>
   );
 }
 
