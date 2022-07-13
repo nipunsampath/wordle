@@ -163,7 +163,9 @@ function Game(props) {
           />
           <StatusBar message={message} isEnded={isEnded} handleTimerCompletion={handleTimerCompletion} timerKey={timerKey} initialDate={initialDate}/>
           <KeyBoard keyHandler={keyHandler} letters={letters}/>
+          <hr/>
           <ControlPanel reInitializeGame={reInitializeGame} showAnswer={showAnswer}/>
+
         </div>
       </>
   );
