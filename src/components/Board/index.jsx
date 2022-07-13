@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Box from "../Box";
 import words from "../../words";
 
 
 const Board = props => {
-  const {row, col, setRow, setCol, clicks, letter, board, setBoard, error, correct, setLetters, win, setWin, lost, setLost, message, setMessage} = props;
+  const {isEnded, row, col, setRow, setCol, clicks, letter, board, setBoard, error, correct, setLetters, setWin, setLost, setMessage} = props;
 
   useEffect(() => {
-    if (win || lost) {
+    if (isEnded) {
       console.log("Game ended!");
     } else {
       if (clicks !== 0) {
@@ -92,9 +92,6 @@ const Board = props => {
             </div>
         );
       })}
-      <div className=" grid place-items-center h-8 font-bold dark:text-white">
-        {lost || win ? message : ""}
-      </div>
     </div>
   );
 };

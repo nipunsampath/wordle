@@ -8,6 +8,7 @@ import NavBar from "../NavBar";
 import styles from "./style.module.css";
 import words from "../../words";
 import {Button} from "@mui/material";
+import StatusBar from "../StatusBar";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -42,7 +43,7 @@ let {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
 function Game(props) {
 
   // Game states
-  const [letter, setLetter] = useState();
+  const [letter, setLetter] = useState("");
   const [changed, setChanged] = useState(false);
   const [correctWord, setCorrectWord] = useState(initialCorrectWord)
   const [board, setBoard] = useState(initialBoard);
@@ -52,6 +53,7 @@ function Game(props) {
   const [win, setWin] = useState(false);
   const [lost, setLost] = useState(false);
   const [message, setMessage] = useState("");
+  const [isEnded, setIsEnded] = useState(false);
 
   const [help, setHelp] = useState(false);
   const [clicked, setClicked] = useState(0);
@@ -104,6 +106,10 @@ function Game(props) {
     setChanged(!changed);
   }, [letters])
 
+  useEffect(()=>{
+    setIsEnded(win || lost);
+  },[win,lost])
+
   return (
       <>
         {help && (
@@ -117,6 +123,7 @@ function Game(props) {
           <NavBar help={setHelp} darkness={setDark} dark={dark}/>
           <hr/>
           <Board
+              isEnded={isEnded}
               row={row}
               setRow={setRow}
               col={col}
@@ -129,13 +136,12 @@ function Game(props) {
               letters={letters}
               setLetters={setLetters}
               error={setError}
-              win={win}
               setWin={setWin}
-              lost={lost}
               setLost={setLost}
               message={message}
               setMessage={setMessage}
           />
+          <StatusBar win={win} lost={lost} message={message} gameState={isEnded}/>
           <KeyBoard keyHandler={keyHandler} letters={letters}/>
           <Button onClick={reInitializeGame}>Next</Button>
         </div>

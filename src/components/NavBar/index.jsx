@@ -10,7 +10,7 @@ function NavBar(props) {
           props.help(true);
         }}
       />
-      <h1 className="text-3xl font-bold tracking-wider">WORDLE</h1>
+      <h1 className="text-3xl font-bold tracking-wider">Tea Time Wordle</h1>
       <Settings darkness={props.darkness} dark={props.dark}/>
     </div>
   );
