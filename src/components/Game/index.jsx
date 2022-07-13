@@ -135,12 +135,10 @@ function Game(props) {
               setBoard={setBoard}
               letter={letter}
               clicks={clicked}
-              letters={letters}
               setLetters={setLetters}
-              error={setError}
+              setError={setError}
               setWin={setWin}
               setLost={setLost}
-              message={message}
               setMessage={setMessage}
           />
           <StatusBar win={win} lost={lost} message={message} gameState={isEnded}/>

@@ -4,7 +4,84 @@ import words from "../../words";
 
 
 const Board = props => {
-  const {isEnded, row, col, setRow, setCol, clicks, letter, board, setBoard, error, correctWord, setLetters, setWin, setLost, setMessage} = props;
+  const {isEnded, row, col, setRow, setCol, clicks, letter, board, setBoard, setError, correctWord, setLetters, setWin, setLost, setMessage} = props;
+
+  const clearLastCell = () => {
+    setCol(col === 0 ? 0 : col - 1);
+    setBoard((prevBoard) => {
+      prevBoard[row][col === 0 ? 0 : col - 1][0] = "";
+      return prevBoard;
+    });
+  };
+
+  const populateCell = (prevBoard) => {
+    if (letter !== "ENTER") {
+      prevBoard[row][col][0] = letter;
+      setCol(col + 1);
+    } else {
+      setError("Words are 5 letters long!");
+      registerTimeoutToClearError();
+    }
+    return prevBoard
+  };
+
+  const handleWinScenario = () => {
+    setWin(true);
+    setTimeout(() => {
+      setMessage("Good Job! You Got It.");
+    }, 750);
+
+  };
+
+  const handleLostScenario = () => {
+    setLost(true);
+    setTimeout(() => {
+      setMessage(`It was ${correctWord}`);
+    }, 750);
+  };
+
+  const registerTimeoutToClearError = () => {
+    setTimeout(() => {
+      setError("");
+    }, 1000);
+  };
+
+  const validateWord = (prevBoard) => {
+    if (letter === "ENTER") {
+      let correctLetters = 0;
+      let word = "";
+      for (let i = 0; i < 5; i++) {
+        word += prevBoard[row][i][0];
+      }
+      if (words.includes(word.toLowerCase())) {
+        for (let i = 0; i < 5; i++) {
+          if (correctWord[i] === prevBoard[row][i][0]) {
+            prevBoard[row][i][1] = "C";
+            correctLetters++;
+          } else if (correctWord.includes(prevBoard[row][i][0]))
+            prevBoard[row][i][1] = "E";
+          else prevBoard[row][i][1] = "N";
+          setRow(row + 1);
+          if (row === 5) {
+            handleLostScenario();
+          }
+          setCol(0);
+          setLetters((prev) => {
+            prev[board[row][i][0].toLowerCase()] = board[row][i][1];
+            return prev;
+          });
+        }
+
+        if (correctLetters === 5) {
+          handleWinScenario();
+        }
+      } else {
+        setError("Word not in dictionary");
+        registerTimeoutToClearError();
+      }
+      return prevBoard;
+    }
+  }
 
   useEffect(() => {
     if (isEnded) {
@@ -12,67 +89,13 @@ const Board = props => {
     } else {
       if (clicks !== 0) {
         if (letter === "DEL") {
-          setCol(col === 0 ? 0 : col - 1);
-          setBoard((prevBoard) => {
-            prevBoard[row][col === 0 ? 0 : col - 1][0] = "";
-            return prevBoard;
-          });
+          clearLastCell();
         } else {
           setBoard((prevBoard) => {
             if (col < 5) {
-              if (letter !== "ENTER") {
-                prevBoard[row][col][0] = letter;
-                setCol(col + 1);
-              } else {
-                error("Words are 5 letters long!");
-                setTimeout(() => {
-                  error("");
-                }, 1000);
-              }
+              populateCell(prevBoard);
             } else {
-              if (letter === "ENTER") {
-                let correctLetters = 0;
-                let word = "";
-                for (let i = 0; i < 5; i++) {
-                  word += prevBoard[row][i][0];
-                }
-                if (words.includes(word.toLowerCase())) {
-                  for (let i = 0; i < 5; i++) {
-                    if (correctWord[i] === prevBoard[row][i][0]) {
-                      prevBoard[row][i][1] = "C";
-                      correctLetters++;
-                    } else if (correctWord.includes(prevBoard[row][i][0]))
-                      prevBoard[row][i][1] = "E";
-                    else prevBoard[row][i][1] = "N";
-                    setRow(row + 1);
-                    if (row === 5) {
-                      setLost(true);
-                      setTimeout(() => {
-                        setMessage(`It was ${correctWord}`);
-                      }, 750);
-                    }
-
-                    setCol(0);
-                    setLetters((prev) => {
-                      prev[board[row][i][0].toLowerCase()] = board[row][i][1];
-                      return prev;
-                    });
-                  }
-
-                  if (correctLetters === 5) {
-                    setWin(true);
-                    setTimeout(() => {
-                      setMessage("You WIN");
-                    }, 750);
-                  }
-                  return prevBoard;
-                } else {
-                  error("Word not in dictionary");
-                  setTimeout(() => {
-                    error("");
-                  }, 1000);
-                }
-              }
+              validateWord(prevBoard);
             }
             return prevBoard;
           });
