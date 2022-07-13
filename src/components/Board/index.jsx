@@ -4,7 +4,7 @@ import words from "../../words";
 
 
 const Board = props => {
-  const {isEnded, row, col, setRow, setCol, clicks, letter, board, setBoard, error, correct, setLetters, setWin, setLost, setMessage} = props;
+  const {isEnded, row, col, setRow, setCol, clicks, letter, board, setBoard, error, correctWord, setLetters, setWin, setLost, setMessage} = props;
 
   useEffect(() => {
     if (isEnded) {
@@ -38,17 +38,17 @@ const Board = props => {
                 }
                 if (words.includes(word.toLowerCase())) {
                   for (let i = 0; i < 5; i++) {
-                    if (correct[i] === prevBoard[row][i][0]) {
+                    if (correctWord[i] === prevBoard[row][i][0]) {
                       prevBoard[row][i][1] = "C";
                       correctLetters++;
-                    } else if (correct.includes(prevBoard[row][i][0]))
+                    } else if (correctWord.includes(prevBoard[row][i][0]))
                       prevBoard[row][i][1] = "E";
                     else prevBoard[row][i][1] = "N";
                     setRow(row + 1);
                     if (row === 5) {
                       setLost(true);
                       setTimeout(() => {
-                        setMessage(`It was ${correct}`);
+                        setMessage(`It was ${correctWord}`);
                       }, 750);
                     }
 

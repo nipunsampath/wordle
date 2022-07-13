@@ -130,7 +130,7 @@ function Game(props) {
               setRow={setRow}
               col={col}
               setCol={setCol}
-              correct={correctWord}
+              correctWord={correctWord}
               board={board}
               setBoard={setBoard}
               letter={letter}
