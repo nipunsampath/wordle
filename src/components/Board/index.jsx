@@ -28,7 +28,7 @@ const Board = props => {
   const handleWinScenario = () => {
     setWin(true);
     setTimeout(() => {
-      setMessage("Good Job! You Got It.");
+      setMessage("Keep up the good work! 😎");
     }, 750);
 
   };

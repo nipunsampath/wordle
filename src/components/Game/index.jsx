@@ -85,7 +85,7 @@ function Game(props) {
   const handleTimerCompletion = () => {
     setLost(true);
     setTimeout(() => {
-      setMessage(`Time's up! The word was ${correctWord}`);
+      setMessage(`Time's up team! ⌛`);
     }, 100);
   }
 
