@@ -9,6 +9,7 @@ import styles from "./style.module.css";
 import words from "../../words";
 import {Button} from "@mui/material";
 import StatusBar from "../StatusBar";
+import ControlPanel from "../ControlPanel";
 
 const wordPool = [...words];
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -88,6 +89,13 @@ function Game(props) {
     }, 100);
   }
 
+  const showAnswer = () => {
+    setLost(true);
+    setTimeout(() => {
+      setMessage(`The word was ${correctWord}`);
+    }, 100);
+  }
+
   const onClickDown = (event) => {
     if (event.key === "Enter") {
       setLetter("ENTER");
@@ -155,7 +163,7 @@ function Game(props) {
           />
           <StatusBar message={message} isEnded={isEnded} handleTimerCompletion={handleTimerCompletion} timerKey={timerKey} initialDate={initialDate}/>
           <KeyBoard keyHandler={keyHandler} letters={letters}/>
-          <Button onClick={reInitializeGame}>Next</Button>
+          <ControlPanel reInitializeGame={reInitializeGame} showAnswer={showAnswer}/>
         </div>
       </>
   );
