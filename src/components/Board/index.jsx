@@ -36,7 +36,7 @@ const Board = props => {
   const handleLostScenario = () => {
     setLost(true);
     setTimeout(() => {
-      setMessage(`It was ${correctWord}`);
+      setMessage(`The word was ${correctWord}`);
     }, 750);
   };
 
