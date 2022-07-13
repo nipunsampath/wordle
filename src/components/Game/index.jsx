@@ -10,12 +10,13 @@ import words from "../../words";
 import {Button} from "@mui/material";
 import StatusBar from "../StatusBar";
 
+const wordPool = [...words];
+
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 function regenerateCorrectWord() {
-  let index = Math.floor((Math.random() * words.length) - 1);
-  const correctWord = words[index].toUpperCase();
-  // words.splice(index, 1)
+  let index = Math.floor((Math.random() * wordPool.length) - 1);
+  const correctWord = wordPool[index].toUpperCase();
   console.log("initializing correctWord word", correctWord)
   return correctWord;
 }
@@ -61,9 +62,10 @@ function Game(props) {
   const [dark, setDark] = useState(false);
 
   const reInitializeGame = () => {
-    words.splice(words.indexOf(correctWord.toLowerCase()),1);
+    wordPool.splice(wordPool.indexOf(correctWord.toLowerCase()),1);
 
     const {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
+
     setCorrectWord(initialCorrectWord);
     setBoard(initialBoard);
     setLetters(initialLetters);
