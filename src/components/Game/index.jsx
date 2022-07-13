@@ -11,8 +11,8 @@ import {Button} from "@mui/material";
 import StatusBar from "../StatusBar";
 
 const wordPool = [...words];
-
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+const timeLimit = 120;
 
 function regenerateCorrectWord() {
   let index = Math.floor((Math.random() * wordPool.length) - 1);
@@ -36,10 +36,11 @@ const initializeGame = () => {
       initialBoard[i].push(["", ""]);
     }
   }
-  return {initialCorrectWord, initialLetters, initialBoard}
+  const initDate = Date.now() + 1000 * timeLimit;
+  return {initialCorrectWord, initialLetters, initialBoard, initDate}
 }
 
-let {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
+let {initialCorrectWord, initialLetters, initialBoard, initDate} = initializeGame()
 
 function Game(props) {
 
@@ -60,12 +61,15 @@ function Game(props) {
   const [clicked, setClicked] = useState(0);
   const [error, setError] = useState("");
   const [dark, setDark] = useState(false);
+  const [timerKey, setTimerKey] = useState(1);
+  const [initialDate, setInitialDate] = useState(initDate);
 
   const reInitializeGame = () => {
     wordPool.splice(wordPool.indexOf(correctWord.toLowerCase()),1);
 
-    const {initialCorrectWord, initialLetters, initialBoard} = initializeGame()
+    const {initialCorrectWord, initialLetters, initialBoard,initDate} = initializeGame()
 
+    setTimerKey(timerKey+1);
     setCorrectWord(initialCorrectWord);
     setBoard(initialBoard);
     setLetters(initialLetters);
@@ -74,6 +78,14 @@ function Game(props) {
     setWin(false);
     setLost(false);
     setMessage("");
+    setInitialDate(initDate);
+  }
+
+  const handleTimerCompletion = () => {
+    setLost(true);
+    setTimeout(() => {
+      setMessage(`Time's up! The word was ${correctWord}`);
+    }, 100);
   }
 
   const onClickDown = (event) => {
@@ -141,7 +153,7 @@ function Game(props) {
               setLost={setLost}
               setMessage={setMessage}
           />
-          <StatusBar win={win} lost={lost} message={message} gameState={isEnded}/>
+          <StatusBar message={message} isEnded={isEnded} handleTimerCompletion={handleTimerCompletion} timerKey={timerKey} initialDate={initialDate}/>
           <KeyBoard keyHandler={keyHandler} letters={letters}/>
           <Button onClick={reInitializeGame}>Next</Button>
         </div>

@@ -1,13 +1,12 @@
-const Settings = props => {
-    const {win, lost, message,gameState} = props;
+import Countdown from "react-countdown";
 
+const StatusBar = props => {
+    const {message, isEnded, handleTimerCompletion, timerKey, initialDate} = props;
     return (
         <div className=" grid place-items-center h-8 font-bold dark:text-white">
-            {lost || win ? message : ""}
-            {/*{gameState.toString()}*/}
+            {isEnded ? message : <Countdown date={initialDate} onComplete={handleTimerCompletion} key={timerKey}/>}
         </div>
-)
-    ;
+    );
 };
 
-export default Settings;
+export default StatusBar;
