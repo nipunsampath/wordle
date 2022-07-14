@@ -28,7 +28,8 @@ const Board = props => {
   const handleWinScenario = () => {
     setWin(true);
     setTimeout(() => {
-      setMessage("Keep up the good work! 😎");
+      const marks = (6 - row).toString().padStart(2,"0");
+      setMessage(`You got ${marks} ${marks === "01" ? "mark" : "marks"}! 😎 `);
     }, 850);
 
   };
