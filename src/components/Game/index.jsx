@@ -11,7 +11,7 @@ import StatusBar from "../StatusBar";
 import ControlPanel from "../ControlPanel";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-const timeLimit = 600;
+const timeLimit = 300;
 
 function regenerateCorrectWord() {
   let index = Math.floor((Math.random() * words.length) - 1);
