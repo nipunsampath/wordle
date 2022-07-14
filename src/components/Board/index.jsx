@@ -85,6 +85,8 @@ const Board = props => {
 
   useEffect(() => {
     if (isEnded) {
+      setError("Please move to the next word!");
+      registerTimeoutToClearError()
       console.log("Game ended!");
     } else {
       if (clicks !== 0) {
