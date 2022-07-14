@@ -11,7 +11,7 @@ import StatusBar from "../StatusBar";
 import ControlPanel from "../ControlPanel";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-const timeLimit = 180;
+const timeLimit = 600;
 
 function regenerateCorrectWord() {
   let index = Math.floor((Math.random() * words.length) - 1);
@@ -96,6 +96,7 @@ function Game(props) {
 
   const onClickDown = (event) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       setLetter("ENTER");
       setClicked(clicked + 1);
     } else if (event.key === "Backspace") {
