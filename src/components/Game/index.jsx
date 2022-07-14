@@ -10,13 +10,12 @@ import words from "../../words";
 import StatusBar from "../StatusBar";
 import ControlPanel from "../ControlPanel";
 
-const wordPool = [...words];
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-const timeLimit = 120;
+const timeLimit = 180;
 
 function regenerateCorrectWord() {
-  let index = Math.floor((Math.random() * wordPool.length) - 1);
-  const correctWord = wordPool[index].toUpperCase();
+  let index = Math.floor((Math.random() * words.length) - 1);
+  const correctWord = words[index].toUpperCase();
   console.log("initializing correctWord word", correctWord)
   return correctWord;
 }
@@ -65,7 +64,7 @@ function Game(props) {
   const [initialDate, setInitialDate] = useState(initDate);
 
   const reInitializeGame = () => {
-    wordPool.splice(wordPool.indexOf(correctWord.toLowerCase()),1);
+    words.splice(words.indexOf(correctWord.toLowerCase()),1);
 
     const {initialCorrectWord, initialLetters, initialBoard,initDate} = initializeGame()
 

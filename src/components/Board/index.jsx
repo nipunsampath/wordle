@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Box from "../Box";
-import words from "../../words";
+import dictionary from "../../dictionary";
 
 
 const Board = props => {
@@ -54,7 +54,7 @@ const Board = props => {
       for (let i = 0; i < 5; i++) {
         word += prevBoard[row][i][0];
       }
-      if (words.includes(word.toLowerCase())) {
+      if (dictionary.includes(word.toLowerCase())) {
         for (let i = 0; i < 5; i++) {
           if (correctWord[i] === prevBoard[row][i][0]) {
             prevBoard[row][i][1] = "C";
