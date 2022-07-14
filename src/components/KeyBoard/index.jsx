@@ -29,7 +29,7 @@ function Key(props) {
       if (props.state === "E") setState("bg-exist text-white");
       if (props.state === "N") setState("bg-wrong text-white dark:bg-gray-600");
       if (props.state === "") setState(initialState);
-    }, 350);
+    },  625);
   }, [props.state]);
 
   return (

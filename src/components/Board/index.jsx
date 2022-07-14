@@ -29,7 +29,7 @@ const Board = props => {
     setWin(true);
     setTimeout(() => {
       setMessage("Keep up the good work! 😎");
-    }, 750);
+    }, 850);
 
   };
 
@@ -37,7 +37,7 @@ const Board = props => {
     setLost(true);
     setTimeout(() => {
       setMessage(`The word was ${correctWord}`);
-    }, 750);
+    }, 850);
   };
 
   const registerTimeoutToClearError = () => {

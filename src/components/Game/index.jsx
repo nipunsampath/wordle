@@ -7,7 +7,6 @@ import Modal from "../Modal";
 import NavBar from "../NavBar";
 import styles from "./style.module.css";
 import words from "../../words";
-import {Button} from "@mui/material";
 import StatusBar from "../StatusBar";
 import ControlPanel from "../ControlPanel";
 
@@ -86,14 +85,14 @@ function Game(props) {
     setLost(true);
     setTimeout(() => {
       setMessage(`Time's up team! ⌛`);
-    }, 100);
+    }, 250);
   }
 
   const showAnswer = () => {
     setLost(true);
     setTimeout(() => {
       setMessage(`The word was ${correctWord}`);
-    }, 100);
+    }, 250);
   }
 
   const onClickDown = (event) => {
