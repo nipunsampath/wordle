@@ -1,27 +1,7 @@
-[//]: # (![wordle screenshot]&#40;https://github.com/MahmoudFettal/wordle/blob/master/public/wordle.jpeg&#41;)
+# Wordle
 
-[//]: # (# I made Wordle XD)
-
-[//]: # ([![GitHub license]&#40;https://img.shields.io/github/license/MahmoudFettal/wordle&#41;]&#40;https://github.com/MahmoudFettal/wordle/blob/master/LICENSE&#41;)
-
-[//]: # ([![GitHub contributors]&#40;https://img.shields.io/github/contributors/MahmoudFettal/wordle.svg&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/graphs/contributors/&#41;)
-
-[//]: # ([![GitHub issues]&#40;https://img.shields.io/github/issues/MahmoudFettal/wordle.svg&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/issues/&#41;)
-
-[//]: # ([![GitHub pull-requests]&#40;https://img.shields.io/github/issues-pr/MahmoudFettal/wordle.svg&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/pulls/&#41;)
-
-[//]: # ()
-[//]: # ([![GitHub watchers]&#40;https://img.shields.io/github/watchers/MahmoudFettal/wordle?style=social&label=Watch&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/watchers/&#41;)
-
-[//]: # ([![GitHub forks]&#40;https://img.shields.io/github/forks/MahmoudFettal/wordle?style=social&label=Fork&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/network/&#41;)
-
-[//]: # ([![GitHub stars]&#40;https://img.shields.io/github/stars/MahmoudFettal/wordle?style=social&label=Star&#41;]&#40;https://GitHub.com/MahmoudFettal/wordle/stargazers/&#41;)
-
-[//]: # (Hello everyone 👋, I am glad to see you here I know it ain't much but this is the game wordle &#40;popular in twitter recently!&#41; I made using ReactJS the funny part is that I didn't write a single line of CSS &#40;Actually I wrote 3 but you didn't see anything 🤫&#41;.)
-
-[//]: # (you can play it live using the link: https://mahmoudfettal.github.io/wordle/)
-
-# Getting Started with Create React App
+A Customized version of the [WORDLE](https://github.com/MahmoudFettal/wordle) game by Mahmoud Fettal. This version introduces time based rounds so 
+that it could be played as individuals or teams. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
