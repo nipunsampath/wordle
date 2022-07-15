@@ -11,12 +11,12 @@ import StatusBar from "../StatusBar";
 import ControlPanel from "../ControlPanel";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-const timeLimit = 300;
+const timeLimit = 240;
 
 function regenerateCorrectWord() {
   let index = Math.floor((Math.random() * words.length) - 1);
   const correctWord = words[index].toUpperCase();
-  console.log("initializing correctWord word", correctWord)
+  console.log("initializing word: ", correctWord)
   return correctWord;
 }
 

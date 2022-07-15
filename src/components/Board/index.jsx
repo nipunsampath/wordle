@@ -29,7 +29,7 @@ const Board = props => {
     setWin(true);
     setTimeout(() => {
       const marks = (6 - row).toString().padStart(2,"0");
-      setMessage(`You got ${marks} ${marks === "01" ? "mark" : "marks"}! 😎 `);
+      setMessage(`🥳  You got ${marks} ${marks === "01" ? "mark" : "marks"}!  🥳 `);
     }, 850);
 
   };
